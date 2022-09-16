@@ -1,6 +1,14 @@
 {{ status }}
 <br />
-<input [(ngModel)]="apiUrl" (change)="callApi(apiUrl, 'onChange')" />
+<form>
+  <input
+    [(ngModel)]="apiUrl"
+    name="apiUrl"
+    (change)="callApi(apiUrl, 'onChange')"
+  />
+  <a (click)="callApi(apiUrl, 'onSubmit')">Submit</a>
+</form>
 <pre
-  >{{ swapi$ | async | anchor | json }}
-</pre>
+  [innerHTML]="swapi$ | async | anchor | json"
+  (click)="handleClick($event)"
+></pre>

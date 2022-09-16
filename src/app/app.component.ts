@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HttpService } from './services/http-service';
+import { HttpService } from './services/http.service';
+// import * as anchor from './pipes/anchor.pipe';
 
 @Component({
   selector: 'my-app',
@@ -9,17 +10,20 @@ import { HttpService } from './services/http-service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private ref: ChangeDetectorRef) {}
   swapi$: Observable<any>;
   status: string = 'idle';
+  loading: boolean = true;
 
-  apiUrl: string = 'https://swapi.dev/api';
+  defaultUrl: string = 'https://swapi.dev/api';
+  @Input() apiUrl: string = this.defaultUrl;
 
   ngOnInit() {
     this.callApi(this.apiUrl, 'OnInit');
   }
 
-  callApi(url: string, source?: string) {
+  callApi(url: string, source?: string): void {
+    console.log(url);
     this.setStatus(`${source} => call`);
     this.swapi$ = this.http.get(url).pipe(
       tap({
@@ -28,14 +32,28 @@ export class AppComponent implements OnInit {
         },
         error: (error) => {
           this.setStatus(`${source} => tap -> error -> ${error.message}`);
-          console.log(error.message);
+          // this.apiUrl = this.defaultUrl;
+          // this.setStatus('Fallback to default url');
+          // console.log(error.message);
+          // this.callApi(this.apiUrl);
         },
         complete: () => this.setStatus(`${source} => tap -> completed`),
       })
     );
   }
 
-  setStatus(message: string) {
+  setStatus(message: string): void {
     this.status = message;
+  }
+
+  handleClick(event): void {
+    event.preventDefault();
+    if (
+      'tagName' in event.target &&
+      event.target.tagName.toLowerCase() === 'a'
+    ) {
+      this.apiUrl = event.target.innerHTML;
+      this.callApi(this.apiUrl, 'handleClick');
+    }
   }
 }
