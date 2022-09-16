@@ -1,11 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UrlSerializer } from '@angular/router';
 
 @Pipe({ name: 'anchor' })
 export class AnchorPipe implements PipeTransform {
-  leaveTypes: Array<string> = ['number', 'boolean'];
-
   constructor(private sanitizer: DomSanitizer) {}
 
   transform(values) {
@@ -36,9 +33,5 @@ export class AnchorPipe implements PipeTransform {
     return `<a href="${this.sanitizer.bypassSecurityTrustUrl(
       href
     )}">${href}</a>`;
-  }
-
-  leaveAsIs(value): boolean {
-    return this.leaveTypes.includes(value) || !value;
   }
 }

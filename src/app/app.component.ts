@@ -32,10 +32,6 @@ export class AppComponent implements OnInit {
         },
         error: (error) => {
           this.setStatus(`${source} => tap -> error -> ${error.message}`);
-          // this.apiUrl = this.defaultUrl;
-          // this.setStatus('Fallback to default url');
-          // console.log(error.message);
-          // this.callApi(this.apiUrl);
         },
         complete: () => this.setStatus(`${source} => tap -> completed`),
       })
@@ -48,6 +44,7 @@ export class AppComponent implements OnInit {
 
   handleClick(event): void {
     event.preventDefault();
+    event.stopPropagation();
     if (
       'tagName' in event.target &&
       event.target.tagName.toLowerCase() === 'a'
