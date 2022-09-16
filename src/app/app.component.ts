@@ -35,16 +35,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  setStatus(message) {
+  setStatus(message: string) {
     this.status = message;
   }
-}
-
-interface ApiResponse {
-  people: string;
-  planets: string;
-  films: string;
-  species: string;
-  starships: string;
-  vehicles: string;
 }

@@ -2,5 +2,5 @@
 <br />
 <input [(ngModel)]="apiUrl" (change)="callApi(apiUrl, 'onChange')" />
 <pre
-  >{{ swapi$ | async | json }}
+  >{{ swapi$ | async | anchor | json }}
 </pre>
