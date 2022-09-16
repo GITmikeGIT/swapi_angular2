@@ -1,4 +1,6 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+{{ status }}
+<br />
+<input [(ngModel)]="apiUrl" (change)="callApi(apiUrl, 'onChange')" />
+<pre
+  >{{ swapi$ | async | json }}
+</pre>
