@@ -1,4 +1,14 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+{{ status }}
+<br />
+<form>
+  <input
+    [(ngModel)]="apiUrl"
+    name="apiUrl"
+    (change)="callApi(apiUrl, 'onChange')"
+  />
+  <a (click)="callApi(apiUrl, 'onSubmit')">Submit</a>
+</form>
+<pre
+  [innerHTML]="swapi$ | async | anchor | json"
+  (click)="handleClick($event)"
+></pre>
