@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpService } from './services/http.service';
-// import * as anchor from './pipes/anchor.pipe';
 
 @Component({
   selector: 'my-app',
@@ -10,13 +9,13 @@ import { HttpService } from './services/http.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private http: HttpService, private ref: ChangeDetectorRef) {}
+  constructor(private http: HttpService) {}
   swapi$: Observable<any>;
   status: string = 'idle';
   loading: boolean = true;
 
   defaultUrl: string = 'https://swapi.dev/api';
-  @Input() apiUrl: string = this.defaultUrl;
+  apiUrl: string = this.defaultUrl;
 
   ngOnInit() {
     this.callApi(this.apiUrl, 'OnInit');
