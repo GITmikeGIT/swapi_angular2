@@ -1,13 +1,34 @@
-<p>{{ status }}</p>
-<form>
-  <input
-    [(ngModel)]="apiUrl"
-    name="apiUrl"
-    (change)="callApi(apiUrl, sourceChange())"
-  />
-  <button (click)="callApi(apiUrl, sourceSubmit())">Submit</button>
-</form>
-<pre
-  [innerHTML]="swapi$ | async | anchor | json"
-  (click)="handleClick($event)"
-></pre>
+<div class="status-bar">
+  <span>{{ status }}</span>
+  <span>|</span>
+  <div>
+    <input
+      [(ngModel)]="disabled"
+      type="checkbox"
+      id="disabled"
+      [checked]="disabled"
+    />
+    <label for="disabled">{{'Unactive links'}}</label>
+  </div>
+</div>
+<div class="container tabs">
+  <ng-container *ngFor="let route of apiRoutes; index as index; first as first">
+    <tab
+      id="{{ 'tab' + index }}"
+      [name]="route"
+      [tab]="tab"
+      [index]="index"
+      (click)="tab = index"
+    >
+    </tab>
+  </ng-container>
+  <ng-container *ngFor="let url of apiRoutesUrl; index as index">
+    <api-call
+      id="{{ 'api-' + index }}"
+      *ngIf="tab === index"
+      [disabled]="disabled"
+      [apiUrl]="url"
+      (newStatusEvent)="setStatus($event)"
+    ></api-call>
+  </ng-container>
+</div>

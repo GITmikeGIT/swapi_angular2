@@ -1,0 +1,20 @@
+<form class="api-request">
+  <label for="apiUrl">Api addres:</label>
+  <input
+    class="form-control"
+    [(ngModel)]="apiUrl"
+    name="apiUrl"
+    id="apiUrl"
+    (change)="callApi(apiUrl, sourceChange())"
+    [disabled]="disabled"
+  />
+  <button *ngIf="!disabled" (click)="callApi(apiUrl, sourceSend())">
+    send request
+  </button>
+</form>
+<pre
+  [innerHTML]="
+    disabled ? (swapi$ | async | json) : (swapi$ | async | anchor | json)
+  "
+  (click)="handleClick($event)"
+></pre>

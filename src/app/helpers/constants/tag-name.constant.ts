@@ -1,1 +1,1 @@
-export const TAG_NAME = "tagName";
+export const TAG_NAME: string = "tagName";
