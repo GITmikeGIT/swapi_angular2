@@ -1,12 +1,11 @@
-{{ status }}
-<br />
+<p>{{ status }}</p>
 <form>
   <input
     [(ngModel)]="apiUrl"
     name="apiUrl"
     (change)="callApi(apiUrl, sourceChange())"
   />
-  <a (click)="callApi(apiUrl, sourceSubmit())">Submit</a>
+  <button (click)="callApi(apiUrl, sourceSubmit())">Submit</button>
 </form>
 <pre
   [innerHTML]="swapi$ | async | anchor | json"
