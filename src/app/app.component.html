@@ -1,6 +1,6 @@
 <div class="status-bar">
   <span>{{ status }}</span>
-  |
+  <span>|</span>
   <div>
     <input
       [(ngModel)]="disabled"
@@ -27,12 +27,10 @@
         tabindex="{{ first ? '0' : '-1' }}"
       >
       </tab>
-      {{ index }}
     </ng-container>
   </div>
 </div>
 <ng-container *ngFor="let url of apiRoutesUrl; index as index">
-  {{ index }}
   <api-call
     id="{{ 'panel-' + index }}"
     role="tabpanel"

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Observable, tap } from "rxjs";
-import { TAG_NAME } from "src/app/helpers/constants";
+import { TAG_NAME } from "src/app/helpers/constants/tag-name.constant";
+import { SourceEnum } from "./../../helpers/enums/source.enum";
 import { HttpService } from "./../../services/http.service";
 
 @Component({
@@ -18,10 +19,10 @@ export class ApiCallComponent {
   swapi$: Observable<any>;
 
   ngOnInit() {
-    this.callApi(this.apiUrl, "OnInit");
+    this.callApi(this.apiUrl, this.sourceInit());
   }
 
-  callApi(url: string, source?: string): void {
+  callApi(url: string, source: string = "emptySource"): void {
     this.setStatus(`${source} => call`);
     this.swapi$ = this.http.get(url).pipe(
       tap({
@@ -40,13 +41,26 @@ export class ApiCallComponent {
     event.preventDefault();
     event.stopPropagation();
     const target = event.target as HTMLElement;
-    if (TAG_NAME in target && target.tagName.toLowerCase() === "a") {
+    if (TAG_NAME in target && target[TAG_NAME].toLowerCase() === "a") {
       this.apiUrl = target.innerHTML;
-      this.callApi(this.apiUrl, "handleClick");
+      this.callApi(this.apiUrl, this.sourceClick());
     }
   }
 
   setStatus(message: string) {
     this.newStatusEvent.emit(message);
+  }
+
+  sourceChange(): string {
+    return SourceEnum.CHANGE;
+  }
+  sourceSend(): string {
+    return SourceEnum.SEND;
+  }
+  sourceInit(): string {
+    return SourceEnum.INIT;
+  }
+  sourceClick(): string {
+    return SourceEnum.CLICK;
   }
 }

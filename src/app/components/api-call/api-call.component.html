@@ -5,10 +5,10 @@
     [(ngModel)]="apiUrl"
     name="apiUrl"
     id="apiUrl"
-    (change)="callApi(apiUrl, 'onChange')"
+    (change)="callApi(apiUrl, sourceChange())"
     [disabled]="disabled"
   />
-  <button *ngif="!disabled" (click)="callApi(apiUrl, 'onSend')">
+  <button *ngif="!disabled" (click)="callApi(apiUrl, sourceSend())">
     send request
   </button>
 </form>
