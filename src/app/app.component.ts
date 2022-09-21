@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { TAG_NAME } from "./helpers/constants";
+import { TAG_NAME } from "./helpers/constants/tag-name.constant";
+import { SourceEnum } from "./helpers/enums/source.enum";
 import { HttpService } from "./services/http.service";
 
 @Component({
@@ -18,8 +19,8 @@ export class AppComponent implements OnInit {
   defaultUrl: string = "https://swapi.dev/api";
   apiUrl: string = this.defaultUrl;
 
-  ngOnInit() {
-    this.callApi(this.apiUrl, "OnInit");
+  ngOnInit(): void {
+    this.callApi(this.apiUrl, this.sourceInit());
   }
 
   callApi(url: string, source?: string): void {
@@ -47,7 +48,19 @@ export class AppComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (TAG_NAME in target && target[TAG_NAME].toLowerCase() === "a") {
       this.apiUrl = target.innerHTML;
-      this.callApi(this.apiUrl, "handleClick");
+      this.callApi(this.apiUrl, this.sourceClick());
     }
+  }
+  sourceChange(): string {
+    return SourceEnum.CHANGE;
+  }
+  sourceSubmit(): string {
+    return SourceEnum.SUBMIT;
+  }
+  sourceInit(): string {
+    return SourceEnum.INIT;
+  }
+  sourceClick(): string {
+    return SourceEnum.CLICK;
   }
 }

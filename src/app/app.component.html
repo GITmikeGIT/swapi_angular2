@@ -4,9 +4,9 @@
   <input
     [(ngModel)]="apiUrl"
     name="apiUrl"
-    (change)="callApi(apiUrl, 'onChange')"
+    (change)="callApi(apiUrl, sourceChange())"
   />
-  <a (click)="callApi(apiUrl, 'onSubmit')">Submit</a>
+  <a (click)="callApi(apiUrl, sourceSubmit())">Submit</a>
 </form>
 <pre
   [innerHTML]="swapi$ | async | anchor | json"
