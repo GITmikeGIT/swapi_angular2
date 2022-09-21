@@ -1,11 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Pipe, PipeTransform } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 
-@Pipe({ name: 'anchor' })
+@Pipe({ name: "anchor" })
 export class AnchorPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
 
-  transform(values) {
+  transform(values: any): any {
     if (values) {
       Object.keys(values).map((key) => {
         const value = values[key];
@@ -15,12 +15,12 @@ export class AnchorPipe implements PipeTransform {
     return values;
   }
 
-  walkThrough(value) {
+  walkThrough(value: any): any {
     switch ((typeof value).toLowerCase()) {
-      case 'object':
+      case "object":
         return this.transform(value);
-      case 'string':
-        if (value.includes('http')) {
+      case "string":
+        if (value.includes("http")) {
           return this.createAnchor(value);
         }
         break;
@@ -29,7 +29,7 @@ export class AnchorPipe implements PipeTransform {
     }
     return value;
   }
-  createAnchor(href) {
+  createAnchor(href: string): string {
     return `<a href="${this.sanitizer.bypassSecurityTrustUrl(
       href
     )}">${href}</a>`;
