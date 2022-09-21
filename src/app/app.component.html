@@ -8,37 +8,27 @@
       id="disabled"
       [checked]="disabled"
     />
-    <label for="disabled">Unactive links</label>
+    <label for="disabled">{{'Unactive links'}}</label>
   </div>
 </div>
 <div class="container tabs">
-  <div role="tablist" aria-label="Sample Tabs">
-    <ng-container
-      *ngFor="let route of apiRoutes; index as index; first as first"
+  <ng-container *ngFor="let route of apiRoutes; index as index; first as first">
+    <tab
+      id="{{ 'tab' + index }}"
+      [name]="route"
+      [tab]="tab"
+      [index]="index"
+      (click)="tab = index"
     >
-      <tab
-        [ngClass]="tab === index ? 'active' : ''"
-        [name]="route"
-        (click)="tab = index"
-        role="tab"
-        aria-selected="true"
-        [attr.aria-controls]="'panel-' + index"
-        [attr.id]="'tab-' + index"
-        tabindex="{{ first ? '0' : '-1' }}"
-      >
-      </tab>
-    </ng-container>
-  </div>
+    </tab>
+  </ng-container>
+  <ng-container *ngFor="let url of apiRoutesUrl; index as index">
+    <api-call
+      id="{{ 'api-' + index }}"
+      *ngIf="tab === index"
+      [disabled]="disabled"
+      [apiUrl]="url"
+      (newStatusEvent)="setStatus($event)"
+    ></api-call>
+  </ng-container>
 </div>
-<ng-container *ngFor="let url of apiRoutesUrl; index as index">
-  <api-call
-    id="{{ 'panel-' + index }}"
-    role="tabpanel"
-    tabindex="0"
-    [attr.aria-labelledby]="'tab-' + index"
-    *ngIf="tab === index"
-    [disabled]="disabled"
-    [apiUrl]="url"
-    (newStatusEvent)="setStatus($event)"
-  ></api-call>
-</ng-container>

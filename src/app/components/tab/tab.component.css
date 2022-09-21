@@ -1,4 +1,8 @@
-h2:hover {
+button:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+button.active {
+  background-color: lightblue;
 }

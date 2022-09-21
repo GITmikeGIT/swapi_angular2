@@ -8,7 +8,7 @@
     (change)="callApi(apiUrl, sourceChange())"
     [disabled]="disabled"
   />
-  <button *ngif="!disabled" (click)="callApi(apiUrl, sourceSend())">
+  <button *ngIf="!disabled" (click)="callApi(apiUrl, sourceSend())">
     send request
   </button>
 </form>
